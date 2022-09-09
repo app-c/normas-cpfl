@@ -16,6 +16,7 @@ import { theme } from '../../global/theme';
 
 import { ged } from '../../utils/Ged';
 import { BoxGed } from '../../componets/BoxGed';
+import { PdfTest } from '../Teste';
 
 export function Home() {
    /* eslint-disable camelcase */
@@ -30,6 +31,14 @@ export function Home() {
          cache: true,
       },
    });
+
+   const source = {
+      page: 1,
+      Uri: {
+         uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
+         cache: true,
+      },
+   };
 
    const Ged =
       search.length > 0
@@ -55,7 +64,8 @@ export function Home() {
             <ClosedModa onPress={() => setModal(false)}>
                <Text>FECHAR</Text>
             </ClosedModa>
-            <PdfView
+            <PdfTest uri={select.Uri.uri} page={select.page} />
+            {/* <PdfView
                trustAllCerts={false}
                source={select.Uri.uri}
                // onLoadComplete={(numberOfPages, filePath) => {
@@ -72,7 +82,7 @@ export function Home() {
                // }}
                style={{ width: '100%', height: '100%' }}
                page={select.page}
-            />
+            /> */}
          </Modal>
 
          <Center>

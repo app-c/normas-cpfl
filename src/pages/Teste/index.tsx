@@ -1,33 +1,45 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Dimensions, View } from 'react-native';
 import Pdf from 'react-native-pdf';
 import pdf from '../../../PDFS/Carregamento,_Movimentação_e_Transporte_de_Postes_no_CCM_CPFL_Serviços.pdf';
 
-export function PdfTest() {
+interface Props {
+   uri: string;
+   page: number;
+}
+export function PdfTest({ uri, page }: Props) {
    const source = {
-      uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
+      uri,
       cache: true,
    };
-   const ts = { uri: pdf, cache: true };
+
+   console.log(page);
+
    return (
       <View style={styles.container}>
-         <Pdf
-            trustAllCerts={false}
-            source={pdf}
-            onLoadComplete={(numberOfPages, filePath) => {
-               console.log(`Number of pages: ${numberOfPages}`);
-            }}
-            onPageChanged={(page, numberOfPages) => {
-               console.log(`Current page: ${page}`);
-            }}
-            onError={error => {
-               console.log(error);
-            }}
-            onPressLink={uri => {
-               console.log(`Link pressed: ${uri}`);
-            }}
-            style={styles.pdf}
-         />
+         {typeof uri === 'number' ? (
+            <Pdf
+               trustAllCerts={false}
+               source={source.uri}
+               onLoadComplete={(numberOfPages, filePath) => {}}
+               onPageChanged={(page, numberOfPages) => {}}
+               onError={error => {}}
+               onPressLink={uri => {}}
+               page={page}
+               style={styles.pdf}
+            />
+         ) : (
+            <Pdf
+               trustAllCerts={false}
+               source={source}
+               onLoadComplete={(numberOfPages, filePath) => {}}
+               onPageChanged={(page, numberOfPages) => {}}
+               onError={error => {}}
+               onPressLink={uri => {}}
+               style={styles.pdf}
+               page={page}
+            />
+         )}
       </View>
    );
 }
