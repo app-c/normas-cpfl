@@ -3,7 +3,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { Dimensions } from 'react-native';
 import { theme } from '../../global/theme';
 
-const { colors, fonts } = theme;
+const { colors } = theme;
 const w = Dimensions.get('window').width;
 
 interface Color {
@@ -16,9 +16,13 @@ export const Container = styled.TouchableOpacity`
    min-height: ${w * 0.25}px;
    border-radius: 5px;
    margin-top: ${RFValue(10)}px;
+   padding-bottom: 10px;
+   border-width: 4px;
+   border-color: #204661;
+   justify-content: center;
 `;
 
-export const Content = styled.View`
+export const Content = styled.View<Color>`
    padding: 5px 10px;
 `;
 
@@ -39,4 +43,5 @@ export const TextD = styled.Text`
    font-size: ${RFValue(14)}px;
    color: ${colors.text.solid};
    text-align: left;
+   font-family: 'regu';
 `;

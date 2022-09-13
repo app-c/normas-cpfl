@@ -10,7 +10,7 @@ const h = Dimensions.get('window').height;
 const { colors } = theme;
 
 export const Container = styled.View`
-   padding: ${w * 0.07}px;
+   padding: ${w * 0.07}px 8px;
    flex: 1;
    background-color: ${colors.primary.solid};
 `;
@@ -18,6 +18,7 @@ export const Container = styled.View`
 export const Title = styled.Text`
    color: ${colors.text.solid};
    font-size: ${RFValue(20)}px;
+   font-family: 'dark';
 `;
 
 export const PdfView = styled(Pdf)`

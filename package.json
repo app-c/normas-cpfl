@@ -11,6 +11,9 @@
   "dependencies": {
     "@config-plugins/react-native-blob-util": "^2.0.0",
     "@config-plugins/react-native-pdf": "^2.0.0",
+    "@expo-google-fonts/prompt": "^0.2.2",
+    "@expo-google-fonts/sura": "^0.2.2",
+    "@expo/vector-icons": "^13.0.0",
     "@react-native-async-storage/async-storage": "^1.17.7",
     "@react-native-firebase/app": "^15.2.0",
     "@react-native-firebase/auth": "^15.2.0",
@@ -61,6 +64,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4",
+    "expo-dev-client": "~1.0.1",
     "jest-expo": "~41.0.0",
     "prettier": "^2.6.2",
     "typescript": "~4.3.5"
