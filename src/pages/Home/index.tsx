@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React from 'react';
+import React, { useState } from 'react';
 import {
    Text,
    Box,
@@ -14,10 +14,14 @@ import { Dimensions, Modal } from 'react-native';
 import { ClosedModa, Container, Title } from './styles';
 import { theme } from '../../global/theme';
 
-import { ged } from '../../utils/Ged';
+import { ged } from '../../utils/Ged/sed';
 import { BoxGed } from '../../componets/BoxGed';
 import { PdfTest } from '../Teste';
 import logo from '../../../assets/logo.png';
+import { CircleSelect } from '../../componets/circlleSelect';
+import { Ser } from '../../utils/Ged/ser';
+import { Set } from '../../utils/Ged/set';
+import { Pd } from '../../utils/Ged/pd';
 
 export function Home() {
    /* eslint-disable camelcase */
@@ -27,6 +31,7 @@ export function Home() {
    //* *.................................................................... */
    const [search, setSearch] = React.useState('');
    const [modal, setModal] = React.useState(false);
+   const [selection, setSelection] = useState('sed');
    const [select, setSelect] = React.useState({
       page: 1,
       Uri: {
@@ -38,6 +43,30 @@ export function Home() {
    const Ged =
       search.length > 0
          ? ged.filter(h => {
+              const up = h.name.toLocaleUpperCase();
+              return up.includes(search);
+           })
+         : [];
+
+   const ser =
+      search.length > 0
+         ? Ser.filter(h => {
+              const up = h.name.toLocaleUpperCase();
+              return up.includes(search);
+           })
+         : [];
+
+   const set =
+      search.length > 0
+         ? Set.filter(h => {
+              const up = h.name.toLocaleUpperCase();
+              return up.includes(search);
+           })
+         : [];
+
+   const pad =
+      search.length > 0
+         ? Pd.filter(h => {
               const up = h.name.toLocaleUpperCase();
               return up.includes(search);
            })
@@ -99,45 +128,207 @@ export function Home() {
             selectionColor={theme.colors.text.solid}
          />
 
+         <Center mt="4">
+            <HStack space={6}>
+               <CircleSelect
+                  selected={selection === 'pd'}
+                  select={() => setSelection('pd')}
+                  text="PADRÕES"
+               />
+
+               <CircleSelect
+                  selected={selection === 'sed'}
+                  select={() => setSelection('sed')}
+                  text="SED"
+               />
+
+               <CircleSelect
+                  selected={selection === 'ser'}
+                  select={() => setSelection('ser')}
+                  text="SER"
+               />
+
+               <CircleSelect
+                  selected={selection === 'set'}
+                  select={() => setSelection('set')}
+                  text="SET"
+               />
+            </HStack>
+         </Center>
+
          <Box mt="10">
             {search.length > 0 ? (
-               <VStack>
-                  <FlatList
-                     contentContainerStyle={{
-                        paddingBottom: 200,
-                     }}
-                     data={Ged}
-                     renderItem={({ item: h }) => (
-                        <>
-                           <BoxGed
-                              title={h.title}
-                              item={h.name}
-                              pres={() => Select(h.page, h.uri)}
-                              color={h.color}
-                           />
-                        </>
-                     )}
-                  />
-               </VStack>
+               <Box>
+                  {selection === 'pd' && (
+                     <VStack space="2">
+                        <FlatList
+                           contentContainerStyle={{
+                              paddingBottom: 300,
+                           }}
+                           data={pad}
+                           renderItem={({ item: h }) => (
+                              <>
+                                 <BoxGed
+                                    title={h.title}
+                                    item={h.name}
+                                    pres={() => Select(h.page, h.uri)}
+                                    color={h.color}
+                                 />
+                              </>
+                           )}
+                        />
+                     </VStack>
+                  )}
+
+                  {selection === 'sed' && (
+                     <VStack space="2">
+                        <FlatList
+                           contentContainerStyle={{
+                              paddingBottom: 300,
+                           }}
+                           data={Ged}
+                           renderItem={({ item: h }) => (
+                              <>
+                                 <BoxGed
+                                    title={h.title}
+                                    item={h.name}
+                                    pres={() => Select(h.page, h.uri)}
+                                    color={h.color}
+                                 />
+                              </>
+                           )}
+                        />
+                     </VStack>
+                  )}
+
+                  {selection === 'ser' && (
+                     <VStack space="2">
+                        <FlatList
+                           contentContainerStyle={{
+                              paddingBottom: 300,
+                           }}
+                           data={ser}
+                           renderItem={({ item: h }) => (
+                              <>
+                                 <BoxGed
+                                    title={h.title}
+                                    item={h.name}
+                                    pres={() => Select(h.page, h.uri)}
+                                    color={h.color}
+                                 />
+                              </>
+                           )}
+                        />
+                     </VStack>
+                  )}
+
+                  {selection === 'set' && (
+                     <VStack space="2">
+                        <FlatList
+                           contentContainerStyle={{
+                              paddingBottom: 300,
+                           }}
+                           data={set}
+                           renderItem={({ item: h }) => (
+                              <>
+                                 <BoxGed
+                                    title={h.title}
+                                    item={h.name}
+                                    pres={() => Select(h.page, h.uri)}
+                                    color={h.color}
+                                 />
+                              </>
+                           )}
+                        />
+                     </VStack>
+                  )}
+               </Box>
             ) : (
-               <VStack space="2">
-                  <FlatList
-                     contentContainerStyle={{
-                        paddingBottom: 200,
-                     }}
-                     data={ged}
-                     renderItem={({ item: h }) => (
-                        <>
-                           <BoxGed
-                              title={h.title}
-                              item={h.name}
-                              pres={() => Select(h.page, h.uri)}
-                              color={h.color}
-                           />
-                        </>
-                     )}
-                  />
-               </VStack>
+               <Box>
+                  {selection === 'pd' && (
+                     <VStack space="2">
+                        <FlatList
+                           contentContainerStyle={{
+                              paddingBottom: 300,
+                           }}
+                           data={Pd}
+                           renderItem={({ item: h }) => (
+                              <>
+                                 <BoxGed
+                                    title={h.title}
+                                    item={h.name}
+                                    pres={() => Select(h.page, h.uri)}
+                                    color={h.color}
+                                 />
+                              </>
+                           )}
+                        />
+                     </VStack>
+                  )}
+
+                  {selection === 'sed' && (
+                     <VStack space="2">
+                        <FlatList
+                           contentContainerStyle={{
+                              paddingBottom: 300,
+                           }}
+                           data={ged}
+                           renderItem={({ item: h }) => (
+                              <>
+                                 <BoxGed
+                                    title={h.title}
+                                    item={h.name}
+                                    pres={() => Select(h.page, h.uri)}
+                                    color={h.color}
+                                 />
+                              </>
+                           )}
+                        />
+                     </VStack>
+                  )}
+
+                  {selection === 'ser' && (
+                     <VStack space="2">
+                        <FlatList
+                           contentContainerStyle={{
+                              paddingBottom: 300,
+                           }}
+                           data={Ser}
+                           renderItem={({ item: h }) => (
+                              <>
+                                 <BoxGed
+                                    title={h.title}
+                                    item={h.name}
+                                    pres={() => Select(h.page, h.uri)}
+                                    color={h.color}
+                                 />
+                              </>
+                           )}
+                        />
+                     </VStack>
+                  )}
+
+                  {selection === 'set' && (
+                     <VStack space="2">
+                        <FlatList
+                           contentContainerStyle={{
+                              paddingBottom: 300,
+                           }}
+                           data={Set}
+                           renderItem={({ item: h }) => (
+                              <>
+                                 <BoxGed
+                                    title={h.title}
+                                    item={h.name}
+                                    pres={() => Select(h.page, h.uri)}
+                                    color={h.color}
+                                 />
+                              </>
+                           )}
+                        />
+                     </VStack>
+                  )}
+               </Box>
             )}
          </Box>
       </Container>

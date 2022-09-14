@@ -17,7 +17,7 @@ export const Container = styled.View`
 
 export const Title = styled.Text`
    color: ${colors.text.solid};
-   font-size: ${RFValue(20)}px;
+   font-size: ${RFValue(18)}px;
    font-family: 'dark';
 `;
 
