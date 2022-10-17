@@ -16,7 +16,7 @@ import sed14 from '../../../../pdf/sed/ET_Carroceria_eletricitário_cabinado.pdf
 import sed15 from '../../../../pdf/sed/sed15.pdf';
 import sed16 from '../../../../pdf/sed/sed16.pdf';
 import sed17 from '../../../../pdf/sed/sed17.pdf';
-import sed18 from '../../../../pdf/sed/Manual de Tarefas Padronizadas 13 - Execução de Atividades em Redes Energizadas com JIB - CPFL Serviços.pdf';
+import sed49 from '../../../../pdf/sed/Manual de Tarefas Padronizadas 13 - Execução de Atividades em Redes Energizadas com JIB - CPFL Serviços.pdf';
 import sed19 from '../../../../pdf/sed/ET_Equipamento_Guindaste_17TM_com_Controle_Remoto.pdf';
 import sed20 from '../../../../pdf/sed/sed20.pdf';
 import sed21 from '../../../../pdf/sed/sed21.pdf';
@@ -174,13 +174,7 @@ export const ged = [
       name: 'ET Cesto aéreo 13M AT',
       uri: sed17,
    },
-   {
-      title: '',
-      color: '#393f6786',
-      page: 1,
-      name: 'ET Equipamento Digger Derrick',
-      uri: sed18,
-   },
+
    {
       title: '',
       color: '#393f6786',
@@ -327,6 +321,13 @@ export const ged = [
       page: 1,
       name: 'Manual de Tarefas Padronizadas 12 - Medição Rápida dos Materiais Retirados das Obras - CPFL Serviços',
       uri: sed39,
+   },
+   {
+      title: '',
+      color: '#393f6786',
+      page: 1,
+      name: 'Manual de Tarefas Padronizadas 13 - Execução de Atividades em Redes Energizadas com JIB - CPFL Serviços',
+      uri: sed49,
    },
    {
       title: '',

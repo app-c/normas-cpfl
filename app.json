@@ -22,6 +22,11 @@
     },
     "ios": {
       "bundleIdentifier": "com.appc.pdf"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "856f7d49-7495-4978-b7c8-43e19b0e9af3"
+      }
     }
   }
 }

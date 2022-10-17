@@ -85,6 +85,9 @@ export function Home() {
 
    return (
       <Container>
+         <Text position="absolute" left="5" color="dark.900">
+            Vesion: 2.0.4
+         </Text>
          <Modal visible={modal} animationType="fade">
             <ClosedModa onPress={() => setModal(false)}>
                <Text>FECHAR</Text>
