@@ -1,46 +1,35 @@
+import { Box, Button, Center } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Dimensions, View } from 'react-native';
 import Pdf from 'react-native-pdf';
-import pdf from '../../../PDFS/Carregamento,_Movimentação_e_Transporte_de_Postes_no_CCM_CPFL_Serviços.pdf';
+import * as WebBrowser from 'expo-web-browser';
+import * as Linking from 'expo-linking';
 
 interface Props {
-   uri: string;
+   source: {
+      uri: string;
+   };
    page: number;
 }
-export function PdfTest({ uri, page }: Props) {
+export function PdfTest(uri: string) {
+   const link =
+      'https://firebasestorage.googleapis.com/v0/b/ged-cpfl.appspot.com/o/pdf%2Fpadrao%2FRamal%20de%20Liga%C3%A7%C3%A3o%20-%20Montagem.pdf?alt=media&token=19ad891f-7298-4fcd-86ae-ce5d959ccec4';
    const source = {
-      uri,
+      uri: link,
       cache: true,
    };
 
-   console.log(page);
-
    return (
-      <View style={styles.container}>
-         {typeof uri === 'number' ? (
-            <Pdf
-               trustAllCerts={false}
-               source={source.uri}
-               onLoadComplete={(numberOfPages, filePath) => {}}
-               onPageChanged={(page, numberOfPages) => {}}
-               onError={error => {}}
-               onPressLink={uri => {}}
-               page={page}
-               style={styles.pdf}
-            />
-         ) : (
-            <Pdf
-               trustAllCerts={false}
-               source={source}
-               onLoadComplete={(numberOfPages, filePath) => {}}
-               onPageChanged={(page, numberOfPages) => {}}
-               onError={error => {}}
-               onPressLink={uri => {}}
-               style={styles.pdf}
-               page={page}
-            />
-         )}
-      </View>
+      <Pdf
+         trustAllCerts={false}
+         source={source}
+         onLoadComplete={(numberOfPages, filePath) => {}}
+         onPageChanged={(page, numberOfPages) => {}}
+         onError={error => {}}
+         onPressLink={uri => {}}
+         page={1}
+         style={styles.pdf}
+      />
    );
 }
 

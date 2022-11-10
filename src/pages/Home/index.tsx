@@ -11,88 +11,83 @@ import {
    Image,
 } from 'native-base';
 import { Dimensions, Modal } from 'react-native';
+import { collection, onSnapshot } from 'firebase/firestore';
+import fire from '@react-native-firebase/firestore';
+import Pdf from 'react-native-pdf';
 import { ClosedModa, Container, Title } from './styles';
 import { theme } from '../../global/theme';
 
-import { ged } from '../../utils/Ged/sed';
 import { BoxGed } from '../../componets/BoxGed';
 import { PdfTest } from '../Teste';
+/* eslint-disable camelcase */
 import logo from '../../../assets/logo.png';
 import { CircleSelect } from '../../componets/circlleSelect';
-import { Ser } from '../../utils/Ged/ser';
-import { Set } from '../../utils/Ged/set';
-import { Pd } from '../../utils/Ged/pd';
+
+interface Props {
+   id: string;
+   name: string;
+   page: number;
+   uri: string;
+}
 
 export function Home() {
-   /* eslint-disable camelcase */
-
    const w = Dimensions.get('window').width;
 
    //* *.................................................................... */
    const [search, setSearch] = React.useState('');
+   const [response, setResponse] = React.useState<Props[]>([]);
    const [modal, setModal] = React.useState(false);
    const [selection, setSelection] = useState('sed');
-   const [select, setSelect] = React.useState({
-      page: 1,
-      Uri: {
-         uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
-         cache: true,
-      },
-   });
+   const [select, setSelect] = React.useState('');
 
-   const Ged =
+   React.useEffect(() => {
+      fire()
+         .collection(selection)
+         .onSnapshot(h => {
+            const rs = h.docs.map(h => h.data() as Props);
+            setResponse(rs);
+         });
+   }, [selection]);
+
+   const geds =
       search.length > 0
-         ? ged.filter(h => {
-              const up = h.name.toLocaleUpperCase();
-              return up.includes(search);
+         ? response.filter(h => {
+              const name = h.name.toLowerCase();
+              if (name.includes(search.toLowerCase())) {
+                 return h;
+              }
            })
-         : [];
+         : response;
 
-   const ser =
-      search.length > 0
-         ? Ser.filter(h => {
-              const up = h.name.toLocaleUpperCase();
-              return up.includes(search);
-           })
-         : [];
-
-   const set =
-      search.length > 0
-         ? Set.filter(h => {
-              const up = h.name.toLocaleUpperCase();
-              return up.includes(search);
-           })
-         : [];
-
-   const pad =
-      search.length > 0
-         ? Pd.filter(h => {
-              const up = h.name.toLocaleUpperCase();
-              return up.includes(search);
-           })
-         : [];
-
-   const Select = React.useCallback((page: number, uri: string) => {
-      setSelect({
-         page,
-         Uri: {
-            uri,
-            cache: true,
-         },
-      });
+   const Select = React.useCallback((uri: string) => {
+      setSelect(uri);
       setModal(true);
    }, []);
+
+   const source = {
+      uri: select,
+      cache: true,
+   };
 
    return (
       <Container>
          <Text position="absolute" left="5" color="dark.900">
-            Vesion: 2.0.4
+            Vesion: 2.0.5
          </Text>
          <Modal visible={modal} animationType="fade">
             <ClosedModa onPress={() => setModal(false)}>
                <Text>FECHAR</Text>
             </ClosedModa>
-            <PdfTest uri={select.Uri.uri} page={select.page} />
+            <Pdf
+               trustAllCerts={false}
+               source={source}
+               onLoadComplete={(numberOfPages, filePath) => {}}
+               onPageChanged={(page, numberOfPages) => {}}
+               onError={error => {}}
+               onPressLink={uri => {}}
+               page={1}
+               style={{ flex: 1 }}
+            />
          </Modal>
 
          <VStack mt="-8">
@@ -134,8 +129,8 @@ export function Home() {
          <Center mt="4">
             <HStack space={6}>
                <CircleSelect
-                  selected={selection === 'pd'}
-                  select={() => setSelection('pd')}
+                  selected={selection === 'padrao'}
+                  select={() => setSelection('padrao')}
                   text="PADRÕES"
                />
 
@@ -160,179 +155,17 @@ export function Home() {
          </Center>
 
          <Box mt="10">
-            {search.length > 0 ? (
-               <Box>
-                  {selection === 'pd' && (
-                     <VStack space="2">
-                        <FlatList
-                           contentContainerStyle={{
-                              paddingBottom: 300,
-                           }}
-                           data={pad}
-                           renderItem={({ item: h }) => (
-                              <>
-                                 <BoxGed
-                                    title={h.title}
-                                    item={h.name}
-                                    pres={() => Select(h.page, h.uri)}
-                                    color={h.color}
-                                 />
-                              </>
-                           )}
-                        />
-                     </VStack>
-                  )}
-
-                  {selection === 'sed' && (
-                     <VStack space="2">
-                        <FlatList
-                           contentContainerStyle={{
-                              paddingBottom: 300,
-                           }}
-                           data={Ged}
-                           renderItem={({ item: h }) => (
-                              <>
-                                 <BoxGed
-                                    title={h.title}
-                                    item={h.name}
-                                    pres={() => Select(h.page, h.uri)}
-                                    color={h.color}
-                                 />
-                              </>
-                           )}
-                        />
-                     </VStack>
-                  )}
-
-                  {selection === 'ser' && (
-                     <VStack space="2">
-                        <FlatList
-                           contentContainerStyle={{
-                              paddingBottom: 300,
-                           }}
-                           data={ser}
-                           renderItem={({ item: h }) => (
-                              <>
-                                 <BoxGed
-                                    title={h.title}
-                                    item={h.name}
-                                    pres={() => Select(h.page, h.uri)}
-                                    color={h.color}
-                                 />
-                              </>
-                           )}
-                        />
-                     </VStack>
-                  )}
-
-                  {selection === 'set' && (
-                     <VStack space="2">
-                        <FlatList
-                           contentContainerStyle={{
-                              paddingBottom: 300,
-                           }}
-                           data={set}
-                           renderItem={({ item: h }) => (
-                              <>
-                                 <BoxGed
-                                    title={h.title}
-                                    item={h.name}
-                                    pres={() => Select(h.page, h.uri)}
-                                    color={h.color}
-                                 />
-                              </>
-                           )}
-                        />
-                     </VStack>
-                  )}
-               </Box>
-            ) : (
-               <Box>
-                  {selection === 'pd' && (
-                     <VStack space="2">
-                        <FlatList
-                           contentContainerStyle={{
-                              paddingBottom: 300,
-                           }}
-                           data={Pd}
-                           renderItem={({ item: h }) => (
-                              <>
-                                 <BoxGed
-                                    title={h.title}
-                                    item={h.name}
-                                    pres={() => Select(h.page, h.uri)}
-                                    color={h.color}
-                                 />
-                              </>
-                           )}
-                        />
-                     </VStack>
-                  )}
-
-                  {selection === 'sed' && (
-                     <VStack space="2">
-                        <FlatList
-                           contentContainerStyle={{
-                              paddingBottom: 300,
-                           }}
-                           data={ged}
-                           renderItem={({ item: h }) => (
-                              <>
-                                 <BoxGed
-                                    title={h.title}
-                                    item={h.name}
-                                    pres={() => Select(h.page, h.uri)}
-                                    color={h.color}
-                                 />
-                              </>
-                           )}
-                        />
-                     </VStack>
-                  )}
-
-                  {selection === 'ser' && (
-                     <VStack space="2">
-                        <FlatList
-                           contentContainerStyle={{
-                              paddingBottom: 300,
-                           }}
-                           data={Ser}
-                           renderItem={({ item: h }) => (
-                              <>
-                                 <BoxGed
-                                    title={h.title}
-                                    item={h.name}
-                                    pres={() => Select(h.page, h.uri)}
-                                    color={h.color}
-                                 />
-                              </>
-                           )}
-                        />
-                     </VStack>
-                  )}
-
-                  {selection === 'set' && (
-                     <VStack space="2">
-                        <FlatList
-                           contentContainerStyle={{
-                              paddingBottom: 300,
-                           }}
-                           data={Set}
-                           renderItem={({ item: h }) => (
-                              <>
-                                 <BoxGed
-                                    title={h.title}
-                                    item={h.name}
-                                    pres={() => Select(h.page, h.uri)}
-                                    color={h.color}
-                                 />
-                              </>
-                           )}
-                        />
-                     </VStack>
-                  )}
-               </Box>
-            )}
+            <FlatList
+               contentContainerStyle={{
+                  paddingBottom: 300,
+               }}
+               data={geds}
+               renderItem={({ item: h }) => (
+                  <>
+                     <BoxGed item={h.name} pres={() => Select(h.uri)} />
+                  </>
+               )}
+            />
          </Box>
       </Container>
    );

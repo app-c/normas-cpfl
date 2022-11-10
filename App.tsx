@@ -16,6 +16,7 @@ import {
    Prompt_900Black as dark,
 } from '@expo-google-fonts/prompt';
 import { Home } from './src/pages/Home';
+import { PdfTest } from './src/pages/Teste';
 
 export default function App() {
    const [appIsReady, setAppIsReady] = useState(false);
